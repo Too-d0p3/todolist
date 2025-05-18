@@ -1,0 +1,35 @@
+{
+    "$schema": "https://json.schemastore.org/package.json",
+    "name": "todo-app",
+    "version": "1.0.0",
+    "description": "A modern todo list app built with Laravel 12, Livewire 3, PostgreSQL, Tailwind CSS, and Docker. Includes real-time toggling, grouped views, and a clean UI.",
+    "author": "Ondřej Nevřela <ondra.nevrela@gmail.com>",
+    "private": true,
+    "license": "MIT",
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite",
+        "docker-up": "docker-compose up -d --build",
+        "docker-down": "docker-compose down",
+        "artisan": "docker exec -it todo_php php artisan",
+        "keygen": "npm run artisan key:generate",
+        "migrate": "npm run artisan migrate",
+        "seed": "npm run artisan db:seed",
+        "test": "npm run artisan test",
+        "test-filter": "docker exec -it todo_php php artisan test --filter=",
+        "cache-clear": "npm run artisan optimize:clear",
+        "route-list": "npm run artisan route:list",
+        "init": "npm run keygen && npm run migrate && npm run seed",
+        "init:clean": "npm run artisan migrate:fresh && npm run seed",
+        "init:fresh": "npm run keygen && npm run artisan migrate:fresh && npm run seed"
+    },
+    "devDependencies": {
+        "@tailwindcss/vite": "^4.1.7",
+        "axios": "^1.9.0",
+        "concurrently": "^9.1.2",
+        "laravel-vite-plugin": "^1.2.0",
+        "tailwindcss": "^4.1.7",
+        "vite": "^6.3.5"
+    }
+}

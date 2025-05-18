@@ -1,0 +1,27 @@
+services:
+  app:
+    build:
+      context: .
+    container_name: todo_php
+    ports:
+      - "8000:80"
+    volumes:
+      - ./src:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      - db
+    environment:
+      APACHE_DOCUMENT_ROOT: /var/www/html/public
+
+  db:
+    image: postgres:17.5
+    container_name: todo_db
+    restart: always
+    environment:
+      POSTGRES_DB: todoapp
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data
