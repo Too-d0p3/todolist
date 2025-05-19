@@ -22,7 +22,8 @@
         "route-list": "npm run artisan route:list",
         "init": "npm run keygen && npm run migrate && npm run seed",
         "init:clean": "npm run artisan migrate:fresh && npm run seed",
-        "init:fresh": "npm run keygen && npm run artisan migrate:fresh && npm run seed"
+        "init:fresh": "npm run keygen && npm run artisan migrate:fresh && npm run seed",
+        "composer-install": "docker exec -it todo_php composer install"
     },
     "devDependencies": {
         "@tailwindcss/vite": "^4.1.7",

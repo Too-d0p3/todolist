@@ -21,6 +21,15 @@ Jednoduchá Laravel aplikace pro správu úkolů (todo list) s použitím Livewi
 
 ---
 
+## 🏗️ Architektura projektu
+Aplikace je navržena s důrazem na čistý a udržitelný kód. Veškerá business logika je oddělena do service vrstev, data jsou validována pomocí FormRequestů a předávána pomocí DTO. Díky tomu je aplikace snadno rozšiřitelná a jednotlivé části lze dobře testovat i samostatně.
+
+* Projekt využívá architekturu s oddělením obchodní logiky (service layer) a validace (FormRequest).
+* Data jsou mezi vrstvami předávána pomocí DTO (Data Transfer Object), což umožňuje lepší škálovatelnost a jednodušší testování jednotlivých částí aplikace.
+* Cílem bylo ukázat best practices, které jsou využitelné i ve větších projektech a týmech.
+
+---
+
 ## ⚡ Funkce
 
 * Vytváření, editace a mazání úkolů
@@ -29,7 +38,7 @@ Jednoduchá Laravel aplikace pro správu úkolů (todo list) s použitím Livewi
 * Možnost hromadného smazání všech aktivních/dokončených úkolů
 * Přehled zbývajícího/dokončeného času (např. "1m ago") s automatickou aktualizací
 * Stylováno pomocí Tailwind CSS + Font Awesome ikonky
-* Pokrytí klíčových funkcí pomocí PHPUnit testů
+* Pokrytí klíčových funkcí pomocí PHPUnit testů (```npm run test```)
 
 ---
 
@@ -50,14 +59,20 @@ cd todo-app
 npm run docker-up
 ```
 
-### 3. Zkopíruj a nastav .env soubor
+### 3. Spusť Docker kontejnery
+
+```bash
+npm run composer-install
+```
+
+### 4. Zkopíruj a nastav .env soubor
 
 ```bash
 cp .env.example .env
 npm run keygen
 ```
 
-### 4. Inicializuj databázi a naplň ukázková data
+### 5. Inicializuj databázi a naplň ukázková data
 
 ```bash
 npm run init
@@ -69,7 +84,7 @@ Nebo pro tvrdý reset včetně vygenerování nového APP\_KEY:
 npm run init:fresh
 ```
 
-### 5. Spusť vývojový server
+### 6. Spusť vývojový server
 
 ```bash
 npm run dev
@@ -79,18 +94,19 @@ npm run dev
 
 ## 🔧 Užitečné skripty
 
-| Příkaz                | Popis                                      |
-| --------------------- | ------------------------------------------ |
-| `npm run artisan`     | Spouštění artisan příkazů přes Docker      |
-| `npm run keygen`      | Vygeneruje `APP_KEY`                       |
-| `npm run migrate`     | Spustí migrace                             |
-| `npm run seed`        | Naplní databázi ukázkovými daty            |
-| `npm run init`        | Vygeneruje klíč, migrace, seed             |
-| `npm run init:clean`  | Resetuje DB a provede seed (bez keygen)    |
-| `npm run init:fresh`  | Tvrdý reset: keygen + fresh migrate + seed |
-| `npm run cache-clear` | Vyčistí cache, routy, view                 |
-| `npm run route-list`  | Vypíše všechny dostupné routy              |
-| `npm run test`        | Spustí PHPUnit testy                       |
+| Příkaz                     | Popis                                      |
+|----------------------------| ------------------------------------------ |
+| `npm run artisan`          | Spouštění artisan příkazů přes Docker      |
+| `npm run keygen`           | Vygeneruje `APP_KEY`                       |
+| `npm run migrate`          | Spustí migrace                             |
+| `npm run seed`             | Naplní databázi ukázkovými daty            |
+| `npm run init`             | Vygeneruje klíč, migrace, seed             |
+| `npm run init:clean`       | Resetuje DB a provede seed (bez keygen)    |
+| `npm run init:fresh`       | Tvrdý reset: keygen + fresh migrate + seed |
+| `npm run cache-clear`      | Vyčistí cache, routy, view                 |
+| `npm run route-list`       | Vypíše všechny dostupné routy              |
+| `npm run test`             | Spustí PHPUnit testy                       |
+| `npm run composer-install` | Nainstaluje PHP závislosti (Composer)      |
 
 ---
 
