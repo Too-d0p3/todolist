@@ -2,11 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreTodoRequest;
+use App\Http\Requests\UpdateTodoRequest;
 use App\Models\Todo;
+use App\Services\TodoService;
 use Illuminate\Http\Request;
+use App\Data\CreateTodoDTO;
+use App\Data\UpdateTodoDTO;
 
 class TodoController extends Controller
 {
+    protected TodoService $todoService;
+
+    public function __construct(TodoService $todoService)
+    {
+        $this->todoService = $todoService;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -27,13 +39,14 @@ class TodoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreTodoRequest $request)
     {
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-        ]);
+        $dto = new CreateTodoDTO(
+            $request->input('title'),
+            $request->input('done', false)
+        );
 
-        \App\Models\Todo::create($data);
+        $this->todoService->create($dto);
 
         return redirect()->route('todos.index')->with('success', 'Úkol byl vytvořen.');
     }
@@ -57,19 +70,14 @@ class TodoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, int $id)
+    public function update(UpdateTodoRequest $request, Todo $todo)
     {
-        $todo = Todo::find($id);
+        $dto = new UpdateTodoDTO(
+            $request->input('title'),
+            $request->input('done', $todo->done)
+        );
 
-        if (!$todo) {
-            return redirect()->route('todos.index')->with('error', 'Úkol již neexistuje.');
-        }
-
-        $data = $request->validate([
-            'title' => 'required|string|max:255',
-        ]);
-
-        $todo->update($data);
+        $this->todoService->update($todo, $dto);
 
         return redirect()->route('todos.index')->with('success', 'Úkol byl upraven.');
     }

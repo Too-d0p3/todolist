@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Services\TodoService;
 use Livewire\Component;
 use App\Models\Todo;
 
@@ -15,9 +16,9 @@ class TodoListActive extends Component
         return view('livewire.todo-list-active', compact('todos'));
     }
 
-    public function deleteAllActive()
+    public function deleteAllActive(TodoService $todoService)
     {
-        Todo::where('done', false)->delete();
+        $todoService->deleteAllActive();
         $this->dispatch('todoUpdated');
     }
 }

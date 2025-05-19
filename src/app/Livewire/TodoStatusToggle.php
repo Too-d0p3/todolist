@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Services\TodoService;
 use Livewire\Component;
 use App\Models\Todo;
 
@@ -23,11 +24,10 @@ class TodoStatusToggle extends Component
         return $this->todoCache ??= Todo::find($this->todoId);
     }
 
-    public function toggle()
+    public function toggle(TodoService $todoService)
     {
         if ($this->todo) {
-            $this->todo->done = !$this->todo->done;
-            $this->todo->save();
+            $todoService->toggleDone($this->todo);
             $this->dispatch('todoUpdated');
         }
     }
